@@ -22,3 +22,5 @@ $n = 'test.lnk'
 $sa = new-object -c shell.application
 $pn = $sa.namespace($f).parsename($n)
 $pn.invokeverb('taskbarpin')
+
+# this is non-working as Microsoft have removed the ability to programmatically pin items
