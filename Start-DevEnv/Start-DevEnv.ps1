@@ -10,21 +10,6 @@
     return $Result
 }
 
-function Invoke-LogTail() {
-    $LogFileFormat = 'orchard-{0}-{1}.log'
-    $LogFileLocation = "$env:DEV\Uqcc\src\Orchard.Web\App_Data\Logs"
-    $Date = Get-Date -Format yyyy.MM.dd
-    $Configuration = 'debug','error'
-
-    $LogFilePath = "$LogFileLocation\$($LogFileFormat -f $Configuration[1],$Date)"
-
-    while (!$(Test-Path -Path $LogFilePath)) {
-        Start-Sleep -Seconds 120
-    }
-
-    Start-Process powershell -ArgumentList "`$host.ui.RawUI.WindowTitle = 'Error log file'; Get-Content -Path $LogFilePath -Wait"
-}
-
 function Invoke-VisualStudio() {
     Write-Output "Starting Visual Studio 2015 Community..."
 
@@ -65,8 +50,6 @@ $Services = @('MSSQL$SQLEXPRESS')
 foreach ($Service in $Services) {
     Start-DependentService -Name $Service
 }
-
-Invoke-LogTail
 
 while ($true) {
     # Start Visual Studio
