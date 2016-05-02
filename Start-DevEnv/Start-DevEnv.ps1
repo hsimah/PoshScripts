@@ -44,6 +44,11 @@ function Stop-DependentService([string]$Name) {
     Write-Output "$Name is $($Service.Status)."
 }
 
+function Stop-OrchardLogFileTail() {
+    $Title = "RUNNING_orchard-*-$(Get-Date -f yyyy.MM.dd).log"
+    Get-Process -Name powershell | Where-Object { $_.MainWindowTitle -like $Title } | Stop-Process
+}
+
 $Services = @('MSSQL$SQLEXPRESS')
 
 # Start dependent services
@@ -65,6 +70,9 @@ while ($true) {
             foreach ($Service in $Services) {
                 Stop-DependentService -Name $Service
             }
+
+            # Kill off log tails
+            Stop-OrchardLogFileTail
 
             exit
         }
