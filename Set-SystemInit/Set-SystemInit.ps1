@@ -8,8 +8,7 @@ if (!(Test-Path $ProfilePath)) {
     New-Item -Path $ProfilePath -ItemType directory -Force 
     
     # hard link profile for powershell and powershell ise
-    cmd /c mklink /H "$ProfilePath\Microsoft.PowerShell_profile.ps1" "$Path\Microsoft.PowerShell_profile.ps1"
-    cmd /c mklink /H "$ProfilePath\Microsoft.PowerShellISE_profile.ps1" "$Path\Microsoft.PowerShell_profile.ps1"
+    cmd /c mklink /H "$ProfilePath\profile.ps1" "$Path\profile.ps1"
 }
 
 # PowerShell cmdlet repository location
