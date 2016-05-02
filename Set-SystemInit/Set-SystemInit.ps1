@@ -1,5 +1,17 @@
 ﻿$Path = Split-Path $MyInvocation.MyCommand.Path -Parent
 
+# Init PowerShell profile
+$ProfilePath = "$env:USERPROFILE\Documents\WindowsPowerShell"
+
+if (!(Test-Path $ProfilePath)) {
+    # Create profile directory
+    New-Item -Path $ProfilePath -ItemType directory -Force 
+    
+    # hard link profile for powershell and powershell ise
+    cmd /c mklink /H "$ProfilePath\Microsoft.PowerShell_profile.ps1" "$Path\Microsoft.PowerShell_profile.ps1"
+    cmd /c mklink /H "$ProfilePath\Microsoft.PowerShellISE_profile.ps1" "$Path\Microsoft.PowerShell_profile.ps1"
+}
+
 # PowerShell cmdlet repository location
 . $Path\New-UserEnvironmentalVariable.ps1 -Key 'PSLocalModulePath' -Value '%USERPROFILE%\OneDrive\Development\Scripts\PowerShell'
 
